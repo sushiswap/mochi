@@ -16,6 +16,6 @@ interface IMolMinimal {
         address paymentToken,
         string calldata details
     ) external returns (uint256);
-    
-    function getProposalFlags(uint256 proposalId) external view returns (bool[6] memory);
+
+    function withdrawBalance(address token, uint256 amount) external;
 }
