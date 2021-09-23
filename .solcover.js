@@ -1,12 +1,15 @@
 module.exports = {
-  norpc: true,
-  testCommand: 'node ../node_modules/.bin/buidler --show-stack-traces test --network coverage',
-  compileCommand: 'node ../node_modules/.bin/buidler --show-stack-traces compile --network coverage',
-  buildDirPath: '/artifacts',
-  skipFiles: [
-    'Migrations.sol',
-    'Token.sol',
-    'oz',
-    'gnosis-safe'
-  ]
+    norpc: true,
+    testCommand: 'npm test',
+    compileCommand: 'npm run compile',
+    skipFiles: [
+        'mocks',
+    ],
+    providerOptions: {
+        default_balance_ether: '10000000000000000000000000',
+    },
+    mocha: {
+        fgrep: '[skip-on-coverage]',
+        invert: true,
+    },
 }
