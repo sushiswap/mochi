@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 // helper for testing moloch.submitProposal return value
 
 pragma solidity 0.6.12;
