@@ -24,9 +24,7 @@ pragma solidity 0.6.12;
                                     */
 
 import "../../interfaces/IBentoBoxMinimal.sol";
-import "../interfaces/IMolMinimal.sol";
 import "../../libraries/SafeMath.sol";
-import "../../utils/ReentrancyGuard.sol";
 import "./SuChef.sol";
 
 /*============================
