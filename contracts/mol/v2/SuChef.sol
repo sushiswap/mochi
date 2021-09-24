@@ -2,6 +2,9 @@
 
 pragma solidity 0.6.12;
 
+import "./interfaces/IMolMinimal.sol";
+import "../../utils/ReentrancyGuard.sol";
+
 /// @notice Low-level caller, ETH/NFT holder, separate bank for Moloch DAO v2 - based on Raid Guild `Minion`.
 contract SuChef is ReentrancyGuard {
     address immutable depositToken;
