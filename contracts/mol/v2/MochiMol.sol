@@ -220,7 +220,7 @@ contract MochiMol is ReentrancyGuard {
         uint256 paymentRequested,
         address paymentToken,
         string memory details
-    ) external nonReentrant returns (uint256 proposalId) {
+    ) external nonReentrant payable returns (uint256 proposalId) {
         require(sharesRequested == 0 || lootRequested == 0, 'must request shares or loot, but not both');
         require(sharesRequested.add(lootRequested) <= MAX_NUMBER_OF_SHARES_AND_LOOT, "too many shares requested");
         require(tokenWhitelist[tributeToken], "tributeToken is not whitelisted");
@@ -234,7 +234,15 @@ contract MochiMol is ReentrancyGuard {
         }
 
         // collect tribute from proposer and store it in the BentoBox until the proposal is processed
-        _safeTransferFrom(tributeToken, msg.sender, address(bento), tributeOffered);
+        if (tributeToken == address(0)) {
+            require(msg.value == tributeOffered, "msg.value doesn't match tribute");
+            (bool success, ) = address(bento).call{value: tributeOffered}("");
+            require(success, "ETH_TRANSFER_FAILED");
+            bento.deposit{value: tributeOffered}(address(0), address(this), address(this), 0, tributeOffered);
+        } else { 
+            _safeTransferFrom(tributeToken, msg.sender, address(bento), tributeOffered);
+        }
+        
         (, uint256 shares) = bento.deposit(tributeToken, address(bento), address(this), tributeOffered, 0);
 
         bool[6] memory flags; // [sponsored, processed, didPass, cancelled, whitelist, guildkick]
